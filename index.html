@@ -92,8 +92,12 @@
 <div id="expired-message">EXPIRED</div>
 
 <script>
-    const countdownEndDate = new Date();
-    countdownEndDate.setDate(countdownEndDate.getDate() + 20);
+    // --- THIS IS THE CORRECTED PART ---
+    // Set your permanent end date here. This date will be the same for everyone.
+    // Format: "Month Day, Year HH:MM:SS".
+    // I have set it 20 days from today (July 25, 2025).
+    // You can change this to any future date and time.
+    const countdownEndDate = new Date("July 25, 2025 15:00:00");
 
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
@@ -105,8 +109,10 @@
 
     function updateCountdown() {
         const now = new Date().getTime();
-        const distance = countdownEndDate - now;
+        // Get the total milliseconds between our fixed end date and the current time
+        const distance = countdownEndDate.getTime() - now;
 
+        // If the countdown is over, show "EXPIRED"
         if (distance < 0) {
             clearInterval(interval);
             countdownEl.style.display = 'none';
@@ -114,17 +120,20 @@
             return;
         }
 
+        // Calculate days, hours, minutes, and seconds from the milliseconds
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+        // Update the numbers on the screen
         daysEl.textContent = String(days).padStart(2, '0');
         hoursEl.textContent = String(hours).padStart(2, '0');
         minutesEl.textContent = String(minutes).padStart(2, '0');
         secondsEl.textContent = String(seconds).padStart(2, '0');
     }
 
+    // Run the function once immediately, then set it to run every second
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
 </script>
