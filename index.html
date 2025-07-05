@@ -62,6 +62,49 @@
         font-size: 15vw;
         display: none;
     }
+    
+    /* --- THIS IS THE NEW CODE FOR MOBILE RESPONSIVENESS --- */
+    @media (max-width: 768px) {
+        body {
+            justify-content: flex-start; /* Align content to the top */
+            padding-top: 5vh; /* Add some space at the top */
+            overflow-y: auto; /* Allow scrolling if content overflows */
+        }
+
+        .logo {
+            width: 70%; /* Slightly smaller logo on mobile */
+            max-width: 280px;
+            margin-bottom: 20px;
+        }
+
+        #countdown {
+            flex-direction: column; /* Stack time units vertically */
+        }
+
+        .time-unit {
+            min-width: unset; /* Remove the minimum width */
+            margin: 15px 0;   /* Adjust margin for vertical layout */
+        }
+
+        .time-value {
+            font-size: 20vw; /* Make numbers larger and more readable */
+        }
+
+        .time-label {
+            font-size: 5vw;  /* Make labels larger and more readable */
+            letter-spacing: 3px; /* Reduce letter spacing for small screens */
+        }
+    }
+    
+    @media (max-width: 320px) {
+        .time-value {
+            font-size: 18vw;
+        }
+        .time-label {
+            font-size: 4.5vw;
+        }
+    }
+
 
 </style>
 </head>
