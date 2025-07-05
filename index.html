@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown</title>
+<style>
+    /* --- Your Custom Font --- */
+    @font-face {
+        font-family: 'BIGX';
+        src: url('BIGX.otf') format('opentype');
+    }
+
+    body {
+        background-color: #000000; /* Black background */
+        color: #ffffff;           /* White text */
+        font-family: 'BIGX', 'Arial Black', sans-serif;
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+    }
+    
+    .logo {
+        max-width: 500px; /* Controls the maximum width of the logo */
+        width: 80%;       /* Makes the logo responsive */
+        height: auto;     /* Maintains aspect ratio */
+        margin-bottom: 40px; /* Space between logo and countdown */
+    }
+
+    #countdown {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    .time-unit {
+        margin: 0 2vw;
+        min-width: 150px; /* Adjusted min-width slightly for balance */
+    }
+
+    .time-value {
+        display: block;
+        font-size: 12vw; /* Adjusted font size for balance with logo */
+        line-height: 1;
+    }
+
+    .time-label {
+        display: block;
+        font-size: 2vw; /* Adjusted font size for balance */
+        margin-top: 10px;
+        letter-spacing: 5px;
+        color: #cccccc; /* Slightly dimmer white for the labels */
+    }
+    
+    #expired-message {
+        font-size: 15vw;
+        display: none;
+    }
+
+</style>
+</head>
+<body>
+
+<!-- Your Logo Here -->
+<img src="logo.png" alt="Logo" class="logo">
+
+<div id="countdown">
+    <div class="time-unit">
+        <span class="time-value" id="days">00</span>
+        <span class="time-label">Days</span>
+    </div>
+    <div class="time-unit">
+        <span class="time-value" id="hours">00</span>
+        <span class="time-label">Hours</span>
+    </div>
+    <div class="time-unit">
+        <span class="time-value" id="minutes">00</span>
+        <span class="time-label">Minutes</span>
+    </div>
+    <div class="time-unit">
+        <span class="time-value" id="seconds">00</span>
+        <span class="time-label">Seconds</span>
+    </div>
+</div>
+
+<div id="expired-message">EXPIRED</div>
+
+<script>
+    const countdownEndDate = new Date();
+    countdownEndDate.setDate(countdownEndDate.getDate() + 20);
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    const countdownEl = document.getElementById('countdown');
+    const expiredEl = document.getElementById('expired-message');
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = countdownEndDate - now;
+
+        if (distance < 0) {
+            clearInterval(interval);
+            countdownEl.style.display = 'none';
+            expiredEl.style.display = 'block';
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        daysEl.textContent = String(days).padStart(2, '0');
+        hoursEl.textContent = String(hours).padStart(2, '0');
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
